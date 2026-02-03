@@ -11,7 +11,7 @@ function mostrarTasques(){
         document.getElementById("llistaTasques").innerHTML ='';
         for (let i=0;i<tasques.length;i++){
             document.getElementById("llistaTasques").innerHTML += 
-            `<li class="tasca ${tasques[i].status === 'completada' ? 'completada' : ''}"><input type="checkbox" class="checkbox" onclick="tascaCompletada(${i})" ${statusTasca(i)}></input><p class="text-tasca">${tasques[i].name}</p></li>`;
+            `<li class="tasca ${tasques[i].status === 'completada' ? 'completada' : ''}"><input type="checkbox" class="checkbox" onclick="tascaCompletada(${i})" ${statusTasca(i)}></input><p class="text-tasca">${tasques[i].name}</p><button class="boto-eliminar" onclick="eliminarTasca(${i})">X</button></li>`;
                 
         }
     }
@@ -99,7 +99,7 @@ function mostrarPendents(){
         for (let i=0;i<tasques.length;i++){
             if (tasques[i].status === 'pendent'){
                 document.getElementById("llistaTasques").innerHTML += 
-                `<li class="tasca"><input type="checkbox" class="checkbox" onclick="tascaCompletada(${i})" ${statusTasca(i)}></input><p class="text-tasca">${tasques[i].name}</p></li>`;   
+                `<li class="tasca"><input type="checkbox" class="checkbox" onclick="tascaCompletada(${i})" ${statusTasca(i)}></input><p class="text-tasca">${tasques[i].name}</p><button class="boto-eliminar" onclick="eliminarTasca(${i})">X</button></li>`;   
             }
         }
     }
@@ -116,9 +116,19 @@ function mostrarCompletades(){
         for (let i=0;i<tasques.length;i++){
             if (tasques[i].status === 'completada'){
                 document.getElementById("llistaTasques").innerHTML += 
-                `<li class="tasca"><input type="checkbox" class="checkbox" onclick="tascaCompletada(${i})" ${statusTasca(i)}></input><p class="text-tasca">${tasques[i].name}</p></li>`;   
+                `<li class="tasca ${tasques[i].status === 'completada' ? 'completada' : ''}"><input type="checkbox" class="checkbox" onclick="tascaCompletada(${i})" ${statusTasca(i)}></input><p class="text-tasca">${tasques[i].name}</p><button class="boto-eliminar" onclick="eliminarTasca(${i})">X</button></li>`;   
             }
         }
     }
 }
-
+function eliminarTasca(num){
+    for (let i=num; i<tasques.length-1;i++){
+        tasques[i]=tasques[i+1];
+    }
+    tasques.splice(tasques.length-1);
+    if (tasques.length>0){
+        mostrarTasques();
+    }else{
+        eliminarTasques();
+    }
+}
